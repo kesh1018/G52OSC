@@ -24,13 +24,11 @@ public class FCFS {
 		
 		waitingTime[0] = 0;
 		
-		for(int i = 1; i < n; i++) 
-		{ 
-			waitingTime[i]=waitingTime[i-1]+burstTime[i-1]; 
+		for(int i = 1; i < n; i++){ 
+			waitingTime[i]=waitingTime[i-1]+burstTime[i-1];
 		} 
 		
-		for(int i = 0; i < n; i++) 
-		{ 
+		for(int i = 0; i < n; i++){ 
 			turnaroundTime[i] = waitingTime[i] + burstTime[i];
 			averageWTime = averageWTime + waitingTime[i];
 		} 
