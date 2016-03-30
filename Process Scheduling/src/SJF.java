@@ -7,7 +7,9 @@ public class SJF {
 
 		int n;
 		int waitingTime[], burstTime[], turnaroundTime[];
-		float averageWTime = 0;
+		float averageWTime = 0, averageTATime = 0;
+		
+		System.out.println("===== Shortest Job First (SJF) =====\n"); 
 		
 		Scanner num = new Scanner(System.in);
 		System.out.println("Enter no of process"); 
@@ -17,12 +19,13 @@ public class SJF {
 		burstTime = new int[n+1];
 		turnaroundTime = new int[n+1];
 		
-		System.out.println("Enter number of process?");
 		
 		for(int i = 0; i < n; i++){
 			System.out.println("Enter the burst time for process " +(i+1));
 			burstTime[i] = num.nextInt();
 		}
+		
+		long cputimeBefore = System.currentTimeMillis();
 		
 		for(int i = 0; i < n; i++){
 			waitingTime[i]=0;
@@ -51,17 +54,33 @@ public class SJF {
 		} 
 		turnaroundTime[n] = waitingTime[n]+ burstTime[n]; 
 		
-		System.out.println(" Process BurstTime WaitingTime TurnAroundTime"); 
-		
-		for(int i = 0; i < n; i++){
-			System.out.println(" "+ i +" "+burstTime[i]+" "+waitingTime[i]+" "+turnaroundTime[i]); 
-		}
-			
 		for(int j = 0; j < n; j++){
 			averageWTime += waitingTime[j]; 
 		}
 		
+		for(int j = 0; j < n; j++){
+			averageTATime += turnaroundTime[j]; 
+		}
+		
+		System.out.println("\n====================== TABLE =========================");
+
+		System.out.print(" ____________________________________________________\n");
+		System.out.println("| Process | BurstTime | WaitingTime | TurnAroundTime |");	
+		
+		for(int i = 0; i < n; i++){
+			System.out.println("      "+ i +" \t"+burstTime[i]+"\t     "+waitingTime[i]+"\t\t    "+turnaroundTime[i]);
+		}
+		
+		System.out.println("\n======================================================");
+		
 		System.out.println("Average Waiting Time "+ String.format("%.2f", (averageWTime = averageWTime/n)));
 		
+		System.out.println("Average Turn Around Time "+ String.format("%.2f", (averageTATime = averageTATime/n)));
+				
+		long cputimeAfter = System.currentTimeMillis();
+		
+		long cputimeDifference = cputimeAfter - cputimeBefore;
+		
+		System.out.println("CPU Time After " + cputimeDifference);
 	}
 }

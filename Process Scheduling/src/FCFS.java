@@ -7,7 +7,9 @@ public class FCFS {
 		
 		int n;
 		int waitingTime[], burstTime[], turnaroundTime[];
-		float averageWTime = 0;
+		float averageWTime = 0, averageTATime = 0;
+		
+		System.out.println("===== First Come First Serve (FCFS) =====\n"); 
 		
 		Scanner num = new Scanner(System.in);
 		System.out.println("Enter no of process"); 
@@ -22,24 +24,43 @@ public class FCFS {
 			burstTime[i] = num.nextInt();
 		}
 		
+		long cputimeBefore = System.currentTimeMillis();
+		
 		waitingTime[0] = 0;
 		
 		for(int i = 1; i < n; i++){ 
-			waitingTime[i]=waitingTime[i-1]+burstTime[i-1];
+			waitingTime[i] = waitingTime[i-1]+ burstTime[i-1];
 		} 
 		
 		for(int i = 0; i < n; i++){ 
 			turnaroundTime[i] = waitingTime[i] + burstTime[i];
-			averageWTime = averageWTime + waitingTime[i];
+			averageWTime += waitingTime[i];
 		} 
 		
-		System.out.println("Process BurstTime WaitingTime TurnAroundTime");
-		
-		for(int i = 0; i < n; i++){
-			System.out.println("    "+ i +"           "+burstTime[i]+"           "+waitingTime[i]+"        "+turnaroundTime[i]);
+		for(int j = 0; j < n; j++){
+			averageTATime += turnaroundTime[j]; 
 		}
 		
+		System.out.println("\n====================== TABLE =========================");
+
+		System.out.print(" ____________________________________________________\n");
+		System.out.println("| Process | BurstTime | WaitingTime | TurnAroundTime |");	
+		
+		for(int i = 0; i < n; i++){
+			System.out.println("      "+ i +" \t"+burstTime[i]+"\t     "+waitingTime[i]+"\t\t    "+turnaroundTime[i]);
+		}
+		
+		System.out.println("\n======================================================");
+		
 		System.out.println("Average Waiting Time "+ String.format("%.2f", (averageWTime = averageWTime/n)));
+		
+		System.out.println("Average Turn Around Time "+ String.format("%.2f", (averageTATime = averageTATime/n)));
+		
+		long cputimeAfter = System.currentTimeMillis();
+		
+		long cputimeDifference = cputimeAfter - cputimeBefore;
+		
+		System.out.println("CPU Time " + cputimeDifference);
 	}	
 
 }

@@ -6,8 +6,9 @@ public class RoundRobin {
 		// TODO Auto-generated method stub
 		int n, sum, timeQuantum;
 		int waitingTime[], burstTimeInput[], turnaroundTime[], burstTimeOutput[];
-		float averageWTime = 0;
-		float averageTATime = 0;
+		float averageWTime = 0, averageTATime = 0;	
+
+		System.out.println("===== Round Robin =====\n"); 
 		
 		Scanner num = new Scanner(System.in);
 		System.out.println("Enter no of process"); 
@@ -18,8 +19,6 @@ public class RoundRobin {
 		turnaroundTime = new int[n];
 		burstTimeOutput = new int[n];
 		
-		System.out.println("Enter number of process?");
-		
 		for(int i = 0; i < n; i++){
 			System.out.println("Enter the burst time for process " +(i+1));
 			burstTimeInput[i] = num.nextInt();
@@ -28,6 +27,8 @@ public class RoundRobin {
 		System.out.println("Enter time quantum?");
 		
 		timeQuantum = num.nextInt();
+		
+		long cputimeBefore = System.currentTimeMillis();
 		
 		for(int i = 0; i < n; i++){
 			burstTimeOutput[i] = burstTimeInput[i];
@@ -69,12 +70,6 @@ public class RoundRobin {
 		for(int i = 0; i < n; i++){
 			turnaroundTime[i] = waitingTime[i] + burstTimeOutput[i];
 		}
-		
-		System.out.println(" Process BurstTime WaitingTime TurnAroundTime"); 
-		
-		for(int i = 0; i < n; i++){
-			System.out.println(" "+ i +" "+burstTimeOutput[i]+" "+waitingTime[i]+" "+turnaroundTime[i]); 
-		}
 			
 		for(int j = 0; j < n; j++){
 			averageWTime += waitingTime[j]; 
@@ -84,10 +79,26 @@ public class RoundRobin {
 			averageTATime += turnaroundTime[j]; 
 		}
 		
+		System.out.println("\n====================== TABLE =========================");
+
+		System.out.print(" ____________________________________________________\n");
+		System.out.println("| Process | BurstTime | WaitingTime | TurnAroundTime |");	
+		
+		for(int i = 0; i < n; i++){
+			System.out.println("      "+ i +" \t"+burstTimeOutput[i]+"\t     "+waitingTime[i]+"\t\t    "+turnaroundTime[i]);
+		}
+		
+		System.out.println("\n======================================================");
+		
 		System.out.println("Average Waiting Time "+ String.format("%.2f", (averageWTime = averageWTime/n)));
 		
 		System.out.println("Average Turn Around Time "+ String.format("%.2f", (averageTATime = averageTATime/n)));
-
+		
+		long cputimeAfter = System.currentTimeMillis();
+		
+		long cputimeDifference = cputimeAfter - cputimeBefore;
+		
+		System.out.println("CPU Time After " + cputimeDifference);
 		
 	}
 
