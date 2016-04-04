@@ -13,13 +13,13 @@ public class FCFS {
 		
 		Scanner num = new Scanner(System.in);
 		System.out.println("Enter no of process"); 
-		n = num.nextInt(); //get the number of process
+		n = num.nextInt();
 		
 		waitingTime = new int[n];
 		burstTime = new int[n];
 		turnaroundTime = new int[n];
 		
-		for(int i = 0; i < n; i++){ //Initialize the start time of CPU usage		
+		for(int i = 0; i < n; i++){
 			System.out.println("Enter the burst time for process " +(i+1));
 			burstTime[i] = num.nextInt();
 		}
@@ -28,19 +28,17 @@ public class FCFS {
 		
 		waitingTime[0] = 0;
 		
-		/*  ======= FCFS Algorithm ====== */
-		
 		for(int i = 1; i < n; i++){ 
-			waitingTime[i] = waitingTime[i-1]+ burstTime[i-1]; //calculate the waiting for each process
+			waitingTime[i] = waitingTime[i-1]+ burstTime[i-1];
 		} 
 		
 		for(int i = 0; i < n; i++){ 
-			turnaroundTime[i] = waitingTime[i] + burstTime[i]; //calculate turn around time for each process
-			averageWTime += waitingTime[i]; //calculate average waiting time
+			turnaroundTime[i] = waitingTime[i] + burstTime[i];
+			averageWTime += waitingTime[i];
 		} 
 		
 		for(int j = 0; j < n; j++){
-			averageTATime += turnaroundTime[j]; //calculate average turn around time
+			averageTATime += turnaroundTime[j]; 
 		}
 		
 		System.out.println("\n====================== TABLE =========================");
@@ -58,9 +56,9 @@ public class FCFS {
 		
 		System.out.println("Average Turn Around Time "+ String.format("%.2f", (averageTATime = averageTATime/n)));
 		
-		long cputimeAfter = System.currentTimeMillis(); //Get the end time of CPU usage during the program
+		long cputimeAfter = System.currentTimeMillis();
 		
-		long cputimeDifference = cputimeAfter - cputimeBefore; // Calculate CPU usage
+		long cputimeDifference = cputimeAfter - cputimeBefore;
 		
 		System.out.println("CPU Time " + cputimeDifference);
 	}	
