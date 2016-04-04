@@ -4,17 +4,15 @@ import java.util.Scanner;
 
 public class Deadlock {
 	 
-	private static int p, r, needMatrix[][], allocateMatrix[][], maxMatrix[][], availMatrix[][];
+	private int p, r, needMatrix[][], allocateMatrix[][], maxMatrix[][], availMatrix[][];
 
 	public static void main(String[] args) {
-		boolean check = false;
-		do{
-			checkDeadlock(check);
-			
-		}while(check == true);
+	
+			new Deadlock().checkDeadlock();
+		
 	}
 	      
-    private static void input(){
+    private void input(){
     	 Scanner input = new Scanner(System.in);
      
 	     System.out.print("Enter no. of processes and resources : ");
@@ -50,50 +48,41 @@ public class Deadlock {
 	     for(int j = 0; j < r; j++){
 	    	 availMatrix[0][j] = input.nextInt();  //available matrix
 	     }
+
     }
 
-    public static boolean checkDeadlock(boolean check){
+    public void checkDeadlock(){
     	
  	   input();
        calculateNeedMatrix();
        
        boolean done[] = new boolean[p];
        int j=0;
-      
- 
+       
        while(j < p){  //until all process allocated
     	   
     	   boolean allocated = false;
 	       
-	       for(int i = 0;i < p; i++){
+	       for(int i = 0;i < p; i++)
 	    	   if(!done[i] && check(i)){
-	    		   //trying to allocate
-	    		   
-	    		   for(int k = 0;k < r; k++){
+	    		   for(int k = 0;k < r; k++)
 	    			   availMatrix[0][k] = availMatrix[0][k] - needMatrix[i][k] + maxMatrix[i][k];
-	    		   }
-	    			   
+
 	    		   System.out.println("Allocated process : "+i);
-	    		   allocated = done[i]=true;
+	    		   allocated = done[i] = true;
 	               j++;
 	    	   }    
 	          if(!allocated) break;  //if no allocation
-	       }
-	       
-	       if(j == p){
-	    	   //if all processes are allocated
-	    	   System.out.println("\nSafely allocated");
-	    	   check = true;
-	       }
-	       else{
-	    	   System.out.println("Deadlock Occured");
-	    	   check = false;
-	       }
        }
-	return check;
+       
+       if(j == p) //if all processes are allocated
+    	   System.out.println("\nSafely allocated");
+       else
+    	   System.out.println("Deadlock Occured"); 
+       
     }
     
-    private static int[][] calculateNeedMatrix(){
+    private int[][] calculateNeedMatrix(){
     	
        for(int i = 0; i < p; i++){
     	   for(int j = 0; j < r; j++){ //calculating need matrix
@@ -104,7 +93,7 @@ public class Deadlock {
        return needMatrix;
     }
   
-    private static boolean check(int i){
+    private boolean check(int i){
        //check all process can be allocated
        for(int j = 0; j < r; j++) 
     	   if(availMatrix[0][j] < needMatrix[i][j])
